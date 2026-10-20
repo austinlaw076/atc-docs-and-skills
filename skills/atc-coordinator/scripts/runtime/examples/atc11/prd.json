@@ -1,0 +1,53 @@
+{
+  "id": "ATC11_ISOLATION_FIXTURE",
+  "title": "Deterministic isolation fixture",
+  "purpose": "Verify local restrictions and protocol wiring; no model research",
+  "audience": "ATC runtime maintainers",
+  "scope": "Controlled fixture only",
+  "max_attempts": 3,
+  "sources": [
+    {
+      "id": "S1",
+      "path": "sources/brief.md"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "goal": "Return a literal-containment fixture claim, clearly marked as synthetic.",
+      "acceptance": [
+        "At least one exact source-containment claim and explicit fixture provenance."
+      ],
+      "source_refs": [
+        "S1"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "R2",
+      "goal": "Return a literal-containment fixture claim, clearly marked as synthetic.",
+      "acceptance": [
+        "At least one exact source-containment claim and explicit fixture provenance."
+      ],
+      "source_refs": [
+        "S1"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "R3",
+      "goal": "Return a literal-containment fixture claim, clearly marked as synthetic.",
+      "acceptance": [
+        "At least one exact source-containment claim and explicit fixture provenance."
+      ],
+      "source_refs": [
+        "S1"
+      ],
+      "depends_on": [
+        "R1",
+        "R2"
+      ]
+    }
+  ],
+  "runtime_policy": "seccomp_python_stdio_v1"
+}

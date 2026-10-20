@@ -1,0 +1,52 @@
+{
+  "id": "RESEARCH_PRD",
+  "title": "只讀研究 PRD 起稿模板",
+  "purpose": "以可追溯證據回答使用者研究問題",
+  "audience": "研究成果接收者",
+  "scope": "僅使用使用者授權並固定的本地來源，不修改外部系統",
+  "max_attempts": 3,
+  "sources": [
+    {
+      "id": "S1",
+      "path": "sources/brief.md"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "goal": "分析來源列出的核心要求，整理至少兩項有證據的研究判斷。",
+      "acceptance": [
+        "至少兩項事實有精確來源引文，清楚區分事實及建議。"
+      ],
+      "source_refs": [
+        "S1"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "R2",
+      "goal": "分析來源可支持與不可支持的主張，列出至少兩項研究限制。",
+      "acceptance": [
+        "至少兩項有來源支持的判斷，避免把未知描述成已驗證。"
+      ],
+      "source_refs": [
+        "S1"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "R3",
+      "goal": "綜合已接受的上游成果，提出可核對的研究結論及下一步。",
+      "acceptance": [
+        "結論有來源支持，承接上游成果並清楚揭示未驗證項目。"
+      ],
+      "source_refs": [
+        "S1"
+      ],
+      "depends_on": [
+        "R1",
+        "R2"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+"""Auditable offline mock coordinator. Never launches an LLM or real agent."""
+from __future__ import annotations
+import hashlib, json, sqlite3
+from pathlib import Path
+from datetime import datetime, timezone
+from .core import Bundle, ContractError, safe_rel
+
+AGENTS = {
+    'backend-agent': {'python', 'api_development', 'testing'},
+    'frontend-agent': {'typescript', 'frontend_development'},
+    'security-agent': {'security_review'},
+    'integration-agent': {'integration', 'testing'},
+    'qa-agent': {'qa_testing', 'testing'},
+}
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+class Coordinator:
+    def __init__(self, bundle: Bundle, db_path, out_dir):
+        self.bundle = bundle
+        self.db = sqlite3.connect(str(db_path))
+        self.db.execute('PRAGMA foreign_keys=ON')
+        self.out = Path(out_dir).resolve()
+        self.out.mkdir(parents=True, exist_ok=True)
+        self.db.executescript('''
+        CREATE TABLE IF NOT EXISTS meta(k TEXT PRIMARY KEY,v TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS tasks(id TEXT PRIMARY KEY,status TEXT NOT NULL,attempts INTEGER NOT NULL DEFAULT 0,agent TEXT,artifact_manifest TEXT);
+        CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY AUTOINCREMENT,at TEXT NOT NULL,task_id TEXT,kind TEXT NOT NULL,detail TEXT NOT NULL);
+        ''')
+        current = self.db.execute("SELECT v FROM meta WHERE k='hash'").fetchone()
+        if current and current[0] != bundle.hash:
+            raise ContractError('Persisted run is bound to a different contract hash')
+        if not current:
+            self.db.execute("INSERT INTO meta(k,v) VALUES('hash',?)", (bundle.hash,))
+            for tid in sorted(bundle.orders):
+                self.db.execute("INSERT INTO tasks(id,status) VALUES(?,'pending')",(tid,))
+            self.event(None, 'initialized', {'contract_hash':bundle.hash})
+        self.db.commit()
+
+    def event(self, tid, kind, detail):
+        self.db.execute('INSERT INTO events(at,task_id,kind,detail) VALUES(?,?,?,?)', (now(),tid,kind,json.dumps(detail,ensure_ascii=False,sort_keys=True)))
+
+    def states(self):
+        return {id:{'status':s,'attempts':a,'agent':g} for id,s,a,g in self.db.execute('SELECT id,status,attempts,agent FROM tasks ORDER BY id')}
+
+    def ready(self):
+        states = self.states()
+        return [tid for tid,order in sorted(self.bundle.orders.items()) if states[tid]['status'] in ('pending','retry_pending') and all(states[d]['status']=='accepted' for d in order['depends_on'])]
+
+    def _agent(self, order):
+        needed = set(order['assignment']['required_capabilities'])
+        for name, caps in AGENTS.items():
+            if needed.issubset(caps): return name
+        return None
+
+    def _artifact_file(self, tid, path):
+        rel = safe_rel(path)
+        # each worker writes to a separate workspace; no shared writable tree
+        # No .resolve() until AFTER symlink checks: otherwise an existing
+        # link could be silently followed out of the mock output directory.
+        cursor = self.out
+        for part in (Path('workspaces') / tid / rel).parts:
+            cursor = cursor / part
+            if cursor.is_symlink():
+                raise ContractError('symlink in output tree')
+        if not cursor.resolve().is_relative_to(self.out):
+            raise ContractError('artifact path escapes workspace')
+        return cursor
+
+    def execute_mock(self, tid, fail_once=False):
+        order = self.bundle.orders[tid]
+        state = self.states()[tid]
+        if tid not in self.ready():
+            raise ContractError(f'{tid} not ready')
+        agent = self._agent(order)
+        if not agent:
+            self.db.execute("UPDATE tasks SET status='blocked' WHERE id=?",(tid,))
+            self.event(tid, 'blocked', {'reason':'no_agent_with_required_capabilities'})
+            self.db.commit(); return 'blocked'
+        attempt=state['attempts']+1
+        self.db.execute("UPDATE tasks SET status='running',attempts=?,agent=? WHERE id=?", (attempt,agent,tid))
+        self.event(tid,'dispatched_mock',{'agent':agent,'attempt':attempt,'parallelism':'logical_wave_only'})
+        if fail_once and attempt==1:
+            limit=self.bundle.plan['orchestration']['max_attempts']
+            status='retry_pending' if attempt<limit else 'failed'
+            self.db.execute('UPDATE tasks SET status=? WHERE id=?',(status,tid))
+            self.event(tid,'mock_worker_failure',{'status':status,'reason':'injected_failure'})
+            self.db.commit(); return status
+        # deterministic synthetic mock worker; never runs code or network.
+        manifest=[]
+        for artifact in order['deliverables']:
+            target=self._artifact_file(tid,artifact['path'])
+            target.parent.mkdir(parents=True,exist_ok=True)
+            content=(f'MOCK ARTIFACT - NOT PRODUCTION OUTPUT\n'
+                     f'contract={self.bundle.hash}\ntask={tid}\ndeliverable={artifact["id"]}\n'
+                     f'goal={order["goal"]}\n')
+            target.write_text(content,encoding='utf-8')
+            blob=target.read_bytes()
+            manifest.append({'id':artifact['id'],'relative_path':artifact['path'],
+                             'sha256':hashlib.sha256(blob).hexdigest(),'size_bytes':len(blob),
+                             'producer':agent,'provenance':'synthetic_mock','verified':False})
+        self.db.execute("UPDATE tasks SET status='submitted',artifact_manifest=? WHERE id=?", (json.dumps(manifest),tid))
+        self.event(tid,'submitted',{'artifact_ids':[a['id'] for a in manifest]})
+        self.db.commit()
+        return self.verify(tid)
+
+    def verify(self, tid):
+        order=self.bundle.orders[tid]
+        row=self.db.execute('SELECT status,artifact_manifest FROM tasks WHERE id=?',(tid,)).fetchone()
+        if not row or row[0] not in ('submitted','awaiting_review'):
+            raise ContractError('task must be submitted before verification')
+        manifest=json.loads(row[1]); byid={a['id']:a for a in manifest}
+        results=[]
+        for ac in order['acceptance']:
+            if ac['method']=='human_review':
+                results.append({'criterion':ac['id'],'status':'pending_human_review','evidence':[]})
+                continue
+            evidence=[]; passed=True
+            for id in ac['deliverable_refs']:
+                art=byid[id]; file=self._artifact_file(tid,art['relative_path'])
+                if not file.is_file() or file.is_symlink():
+                    passed=False; continue
+                blob=file.read_bytes()
+                digest=hashlib.sha256(blob).hexdigest()
+                if not blob or digest != art['sha256']:
+                    passed=False
+                evidence.append({'artifact_id':id,'sha256_observed':digest,'sha256_expected':art['sha256'],'size_bytes':len(blob)})
+            results.append({'criterion':ac['id'],'status':'pass' if passed else 'fail','evidence':evidence})
+        if any(r['status']=='fail' for r in results):
+            status='rejected'
+        elif any(r['status']=='pending_human_review' for r in results):
+            status='awaiting_review'
+        else:
+            status='accepted'
+            for art in manifest: art['verified']=True
+        self.db.execute('UPDATE tasks SET status=?,artifact_manifest=? WHERE id=?',(status,json.dumps(manifest),tid))
+        self.event(tid,'verification',{'status':status,'criteria':results})
+        self.db.commit()
+        return status
+
+    def run(self, fail_once=None):
+        fail_once=set(fail_once or [])
+        waves=[]
+        while True:
+            ready=self.ready()
+            if not ready: break
+            # A logical wave cannot double-book the same mock agent.
+            selected=[]; used_agents=set()
+            for candidate in ready:
+                agent=self._agent(self.bundle.orders[candidate])
+                if agent is not None and agent in used_agents: continue
+                selected.append(candidate)
+                if agent is not None: used_agents.add(agent)
+                if len(selected)>=self.bundle.plan['orchestration']['max_parallel_agents']: break
+            wave=[]
+            for tid in selected:
+                wave.append({'id':tid,'result':self.execute_mock(tid,fail_once=(tid in fail_once))})
+            waves.append(wave)
+        return {'contract_hash':self.bundle.hash,'waves':waves,'states':self.states(), 'product_status':self.product_status()}
+
+    def product_status(self):
+        states=self.states()
+        if any(s['status']=='failed' for s in states.values()): return 'failed'
+        if any(s['status']=='blocked' for s in states.values()): return 'blocked'
+        if any(s['status'] in ('awaiting_review','rejected') for s in states.values()): return 'needs_review'
+        if not all(s['status']=='accepted' for s in states.values()): return 'in_progress'
+        # Full requirement and product acceptance coverage statically validated by Bundle.
+        if any(a['method']=='human_review' for a in self.bundle.product['acceptance']):
+            return 'needs_product_review'
+        return 'accepted_mock_only'
+
+    def report(self):
+        events=[]
+        for id,at,tid,kind,detail in self.db.execute('SELECT id,at,task_id,kind,detail FROM events ORDER BY id'):
+            events.append({'id':id,'at':at,'task_id':tid,'kind':kind,'detail':json.loads(detail)})
+        rows={tid:json.loads(m) if m else [] for tid,m in self.db.execute('SELECT id,artifact_manifest FROM tasks')}
+        return {'contract_hash':self.bundle.hash,'product_status':self.product_status(),
+                'states':self.states(),'artifacts':rows,'traceability':self.bundle.compile()['traceability'], 'events':events,
+                'disclaimer':'Mock artifacts and logical parallel waves; no subagents, external tools, production writes, or actual human approvals.'}

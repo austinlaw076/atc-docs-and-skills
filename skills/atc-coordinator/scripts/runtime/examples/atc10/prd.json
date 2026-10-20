@@ -1,0 +1,66 @@
+{
+  "id": "ATC10_RESEARCH",
+  "title": "ATC v0.9 readiness research",
+  "purpose": "用可追溯證據評估由原型轉向實用研究系統所需的改動",
+  "audience": "ATC Coordinator 與開發者",
+  "scope": "只讀固定 v0.9 原始碼與測試文件；不評估未提供的生產環境",
+  "max_attempts": 3,
+  "sources": [
+    {
+      "id": "S1",
+      "path": "sources/test_report.md"
+    },
+    {
+      "id": "S2",
+      "path": "sources/coordinator.py.txt"
+    },
+    {
+      "id": "S3",
+      "path": "sources/security.md"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "goal": "查證 v0.9 Dispatcher 是模擬還是真實執行；列出至少兩項證據與必要改動。",
+      "acceptance": [
+        "至少兩項有精確來源行號的事實，區分已執行與未實作功能。"
+      ],
+      "source_refs": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "R2",
+      "goal": "查證 v0.9 成果驗證的能力與缺口；列出至少兩項有來源支持的事實。",
+      "acceptance": [
+        "至少兩項有精確來源行號的事實，解釋檔案完整性與語義驗收的分別。"
+      ],
+      "source_refs": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "R3",
+      "goal": "綜合已接受的 R1、R2 成果，提出 v1.0 研究工作流接收條件與殘留限制。",
+      "acceptance": [
+        "至少兩項有來源支持的綜合判斷，涵蓋派單、驗收與權限限制，不宣稱已驗證生產隔離。"
+      ],
+      "source_refs": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "depends_on": [
+        "R1",
+        "R2"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object","additionalProperties":false,
+  "required":["summary","priority_order","deliverable_description","open_questions","grounding"],
+  "properties":{
+    "summary":{"type":"string","maxLength":1500},
+    "priority_order":{"type":"array","uniqueItems":true,"maxItems":7,"items":{"enum":["accuracy","cost","reliability","salary","commute","safety","speed"]}},
+    "deliverable_description":{"type":"string","maxLength":1500},
+    "open_questions":{"type":"array","maxItems":12,"items":{"type":"string","minLength":1,"maxLength":500}},
+    "grounding":{"type":"array","maxItems":20,"items":{"type":"object","additionalProperties":false,"required":["field","quote"],"properties":{"field":{"enum":["summary","priority_order","deliverable_description"]},"quote":{"type":"string","minLength":1,"maxLength":1500}}}}
+  }
+}

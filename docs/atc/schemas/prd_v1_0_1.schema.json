@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_-]{0,31}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10000
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10000
+    },
+    "audience": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10000
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10000
+    },
+    "max_attempts": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_-]{0,31}$"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 10000
+          }
+        },
+        "required": [
+          "id",
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 64
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_-]{0,31}$"
+          },
+          "goal": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 10000
+          },
+          "acceptance": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 10000
+            },
+            "minItems": 1,
+            "uniqueItems": true,
+            "maxItems": 64
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_-]{0,31}$"
+            },
+            "minItems": 1,
+            "uniqueItems": true,
+            "maxItems": 64
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_-]{0,31}$"
+            },
+            "minItems": 0,
+            "uniqueItems": true,
+            "maxItems": 64
+          }
+        },
+        "required": [
+          "id",
+          "goal",
+          "acceptance",
+          "source_refs",
+          "depends_on"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 64
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "purpose",
+    "audience",
+    "scope",
+    "max_attempts",
+    "sources",
+    "requirements"
+  ],
+  "additionalProperties": false
+}

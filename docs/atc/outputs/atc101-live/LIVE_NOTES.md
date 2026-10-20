@@ -1,0 +1,21 @@
+# Live ATC v1.0.1 research run
+
+Coordinator-generated REPORT.json reports `accepted_host_reviewed`; R1, R2 and R3 are accepted and `integrity_errors` is empty. Every final review checked C1–C3 and AC001/AC002; all supported/satisfied. R3 was dispatched only after both upstream tasks were accepted and revalidated. Each worker ran once.
+
+Seven actual fresh collaboration sessions were started with `fork_turns=none`. The entire corresponding persisted prompt text was the message to each session; no path-only handoff, summaries or inherited context were used. Host identities below are the actual canonical task names returned by `collaboration.spawn_agent`. Each matching `*-host-receipt.json` retains that tool result and sent-prompt hash; Coordinator receipts use `collaboration.spawn_agent:<actual task name>`. These are trusted-host send attestations, not remote reading proofs or signed provider receipts.
+
+| Delivery | Actual host session | Full delivered prompt | SHA-256 |
+|---|---|---|---|
+| R1-worker | `/root/atc101_live_host/r1_worker` | `R1-worker-prompt.txt` | `68b09b563dd3e16a23c6970e57ee071e20f0ee67aa95be19f39604ea5bae778d` |
+| R2-worker | `/root/atc101_live_host/r2_worker` | `R2-worker-prompt.txt` | `00b740c731bfb4e4221aefbf14af05755c5e694ef7f9a2e43367f118e689a51d` |
+| R1-reviewer | `/root/atc101_live_host/r1_reviewer` | `R1-reviewer-prompt.txt` | `af459336afc68cbd1b8889cd1766324a4957b30e5a2d6341ec586a6d640e9b23` |
+| R2-reviewer | `/root/atc101_live_host/r2_reviewer` | `R2-reviewer-prompt.txt` | `5a36f64b46f6b5ada5fc8c33908b40461a66fedefae9c20c9a27664f6f8c7535` |
+| R3-worker | `/root/atc101_live_host/r3_worker` | `R3-worker-prompt.txt` | `62ff78d67bf504fc7d1471db763c52126b1386c0a9ad275419011f9e24226a11` |
+| R3-reviewer | `/root/atc101_live_host/r3_reviewer` | `R3-reviewer-prompt.txt` | `5ff30b629132a18347ba42a4a3b845f412fafd7bd09460660d16ea16eb4b4790` |
+| R3-reviewer-attempt2 | `/root/atc101_live_host/r3_reviewer_retry` | `R3-reviewer-attempt2-prompt.txt` | `82ac26b1204b1b432d1076e4b8341a4737c3d355dba2f017807bc5449989a9be` |
+
+All prompt copies were byte-compared with `deliveries/<request_id>.txt`; hashes matched the recorded sent-prompt hashes. Original response JSON is retained in the corresponding `*-response.json` files, without rewriting claims, limitations, decisions or reasons. The raw expired R3 review is retained separately from the retry.
+
+Recovery: an environment interruption left the original R3 review unimported. Its real `accept` response was available on resume and saved as R3-reviewer-response.json. The receive CLI first failed because jsonschema was unavailable; HOST_RESUME_ERRORS.json records that failure. Root restored the required dependencies within the runtime requirements. By then request `9f5be2d38160c790f22e043ae18afc7e` had expired, so it was failed through Coordinator and was never accepted. A fresh request `4aeecf4e5260e26699ecccbf99c6525c` with a new input_hash was sent in full to r3_reviewer_retry; its original accept response passed receive. No accepted worker was rerun, and no old response was rebound or rewritten. All dispatches used TTL 3600 seconds. No semantic rejection occurred. An initial shell redirection failed because the new run directory did not yet exist; directory creation resolved it before any live request was created.
+
+Limits: worker/reviewer no-tool restrictions were advisory instructions, with no tool calls observed in these research sessions; tool catalogs were not technically disabled. This is not enforced OS/process isolation. Independent review means separate sessions/roles, not different providers or guaranteed correct model judgment. Research supports only the pinned source excerpts and local mechanisms; forced Runtime isolation, full call-path coverage, actual transaction completion guarantees and model accuracy remain outside this evidence. The host used only run artifacts and the authorized CLI/collaboration bridge, apart from reading the invoked skill instructions. No network research, external writes, paid API or new service was used by this host or its research sessions. Runtime code was restored/synchronized by root during recovery; the PRD/source snapshot and contract hash remained unchanged.

@@ -1,0 +1,217 @@
+<!doctype html><html lang="zh-Hant-HK"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ATC Contract Review</title>
+<style>:root{--bg:#f5f6fa;--text:#192432;--muted:#526172;--line:#dce1e7;--card:#fff;--accent:#235fb6}*{box-sizing:border-box}body{margin:0;font:15px/1.6 system-ui,-apple-system,sans-serif;color:var(--text);background:var(--bg)}main{max-width:870px;margin:44px auto;padding:0 20px}h1{font-size:26px;line-height:1.35;margin:8px 0}h2{font-size:18px;margin:0 0 10px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:20px;margin-top:14px}.eyebrow{font-weight:700;color:var(--accent);font-size:12px;letter-spacing:.12em}.meta{font-size:13px;color:var(--muted)}.warning{border-left:4px solid #ae6121}.pill{display:inline-block;padding:3px 10px;border:1px solid var(--line);border-radius:100px;margin:2px;font-size:13px}.allow{background:#eef9f3}.approval_required{background:#fff4db}.deny{background:#fceff0}ul{margin:7px 0;padding-left:23px}details summary{cursor:pointer;font-weight:650}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f7f8fb;padding:14px;border-radius:8px;max-height:430px;overflow:auto}.error{color:#ab1b28}.warningli{color:#825000}.muted{color:var(--muted)}footer{font-size:12px;color:var(--muted);margin:20px 0 50px}button{border:1px solid var(--line);border-radius:8px;background:white;padding:9px 12px;cursor:pointer}</style></head><body><main>
+<div class="eyebrow">AGENT TASK CONTRACT · v0.6 · DRAFT</div><h1>幫我草擬一份研究報告之後發送電郵給同事，發送前要先攞我批准。</h1>
+<p class="meta">可審閱草稿（未批准） · SHA-256: <code>b14357a053c77f89…</code> · 由離線工具產生</p>
+<div class="card"><h2>1 · GOAL 任務目標</h2><p>幫我草擬一份研究報告之後發送電郵給同事，發送前要先攞我批准。</p></div>
+<div class="card"><h2>2 · PRIORITY / DECIDE</h2><p><b>取捨順序：</b> 未指定；唔會擅自決定</p><p><b>決策方式：</b> qualitative（未執行定量計算）</p><p><b>證據不足：</b> abstain</p></div>
+<div class="card"><h2>3 · AUTHORIZATION 授權</h2><p><b>可自行做：</b> <span class="pill allow">公開研究</span> <span class="pill allow">分析</span> <span class="pill allow">撰寫草稿</span></p><p><b>要先批准：</b> <span class="pill approval_required">對外發送</span></p><p><b>禁止：</b> <span class="pill deny">刪除資料</span> <span class="pill deny">部署</span> <span class="pill deny">修改外部資料</span> <span class="pill deny">購買</span> <span class="pill deny">轉帳</span></p><p class="meta">呢度只係政策草稿；真正安全控制需要獨立 Gateway，HTML 不會批核任何操作。</p></div>
+<div class="card"><h2>4 · VERIFY 驗收</h2><ul><li>Expected output is non-empty <small>(programmatic)</small></li><li>Human reviewer confirms relevance and accuracy <small>(human)</small></li></ul></div>
+<div class="card warning"><h2>5 · 待你審閱</h2><ul><li>交付物格式與成功驗收條件係乜？</li><li>涉及外部操作，請明確確認範圍、對象同是否需要修改 Contract。</li><li>有冇必須遵守嘅期限或其他限制？</li></ul></div>
+<details class="card"><summary>Lint 結果（1 項）</summary><ul><li class="info">INFO · draft_only: Structurally sound draft; human approval and host enforcement are NOT provided</li></ul></details>
+<details class="card"><summary>完整 YAML Policy（只讀）</summary><pre>{
+  &quot;contract_version&quot;: &quot;0.6&quot;,
+  &quot;id&quot;: &quot;guarded-email&quot;,
+  &quot;title&quot;: &quot;幫我草擬一份研究報告之後發送電郵給同事，發送前要先攞我批准。&quot;,
+  &quot;language&quot;: &quot;zh-HK&quot;,
+  &quot;task_kind&quot;: &quot;writing&quot;,
+  &quot;status&quot;: &quot;draft&quot;,
+  &quot;goal&quot;: {
+    &quot;outcome&quot;: &quot;幫我草擬一份研究報告之後發送電郵給同事，發送前要先攞我批准。&quot;,
+    &quot;audience&quot;: &quot;task_owner&quot;
+  },
+  &quot;scope&quot;: {
+    &quot;include&quot;: [
+      &quot;analyze&quot;,
+      &quot;draft_output&quot;,
+      &quot;research_public&quot;,
+      &quot;send_external&quot;
+    ],
+    &quot;exclude&quot;: [
+      &quot;delete_data&quot;,
+      &quot;deploy&quot;,
+      &quot;modify_external&quot;,
+      &quot;purchase&quot;,
+      &quot;transfer_funds&quot;
+    ]
+  },
+  &quot;priority&quot;: {
+    &quot;order&quot;: [],
+    &quot;conflict_policy&quot;: &quot;escalate_if_unspecified&quot;
+  },
+  &quot;decide&quot;: {
+    &quot;method&quot;: &quot;qualitative&quot;,
+    &quot;evidence_policy&quot;: &quot;cite_and_label_uncertainty&quot;,
+    &quot;on_insufficient_evidence&quot;: &quot;abstain&quot;,
+    &quot;explain_recommendation&quot;: true
+  },
+  &quot;authorization&quot;: {
+    &quot;default&quot;: &quot;deny&quot;,
+    &quot;actions&quot;: {
+      &quot;research_public&quot;: &quot;allow&quot;,
+      &quot;analyze&quot;: &quot;allow&quot;,
+      &quot;draft_output&quot;: &quot;allow&quot;,
+      &quot;delete_data&quot;: &quot;deny&quot;,
+      &quot;deploy&quot;: &quot;deny&quot;,
+      &quot;modify_external&quot;: &quot;deny&quot;,
+      &quot;purchase&quot;: &quot;deny&quot;,
+      &quot;send_external&quot;: &quot;approval_required&quot;,
+      &quot;transfer_funds&quot;: &quot;deny&quot;
+    },
+    &quot;approval&quot;: {
+      &quot;scope&quot;: &quot;single_action&quot;,
+      &quot;expires_minutes&quot;: 30
+    }
+  },
+  &quot;verify&quot;: {
+    &quot;pass_when&quot;: &quot;all&quot;,
+    &quot;checks&quot;: [
+      {
+        &quot;id&quot;: &quot;deliverable-present&quot;,
+        &quot;kind&quot;: &quot;programmatic&quot;,
+        &quot;criterion&quot;: &quot;Expected output is non-empty&quot;,
+        &quot;rule&quot;: &quot;output_nonempty&quot;
+      },
+      {
+        &quot;id&quot;: &quot;human-signoff&quot;,
+        &quot;kind&quot;: &quot;human&quot;,
+        &quot;criterion&quot;: &quot;Human reviewer confirms relevance and accuracy&quot;,
+        &quot;rule&quot;: &quot;manual_review&quot;
+      }
+    ]
+  },
+  &quot;limits&quot;: {
+    &quot;max_spend_hkd&quot;: 0,
+    &quot;max_retries_per_step&quot;: 2
+  },
+  &quot;deliverables&quot;: [
+    {
+      &quot;id&quot;: &quot;primary-output&quot;,
+      &quot;description&quot;: &quot;Human-readable task result; refine format during review&quot;,
+      &quot;required&quot;: true
+    }
+  ],
+  &quot;lifecycle&quot;: {
+    &quot;initial_state&quot;: &quot;draft&quot;,
+    &quot;terminal_states&quot;: [
+      &quot;completed&quot;,
+      &quot;failed&quot;,
+      &quot;cancelled&quot;
+    ]
+  },
+  &quot;review&quot;: {
+    &quot;open_questions&quot;: [
+      &quot;交付物格式與成功驗收條件係乜？&quot;,
+      &quot;涉及外部操作，請明確確認範圍、對象同是否需要修改 Contract。&quot;,
+      &quot;有冇必須遵守嘅期限或其他限制？&quot;
+    ],
+    &quot;assumptions&quot;: [
+      &quot;Default-deny authorization; no live actions&quot;,
+      &quot;Proposed priorities are only extracted from explicit phrases&quot;
+    ],
+    &quot;requested_sensitive_actions&quot;: [
+      &quot;send_external&quot;
+    ]
+  }
+}</pre></details>
+<details class="card"><summary>原始 Contract（只讀）</summary><pre>---
+contract_version: &#x27;0.6&#x27;
+id: guarded-email
+title: 幫我草擬一份研究報告之後發送電郵給同事，發送前要先攞我批准。
+language: zh-HK
+task_kind: writing
+status: draft
+goal:
+  outcome: 幫我草擬一份研究報告之後發送電郵給同事，發送前要先攞我批准。
+  audience: task_owner
+scope:
+  include:
+  - analyze
+  - draft_output
+  - research_public
+  - send_external
+  exclude:
+  - delete_data
+  - deploy
+  - modify_external
+  - purchase
+  - transfer_funds
+priority:
+  order: []
+  conflict_policy: escalate_if_unspecified
+decide:
+  method: qualitative
+  evidence_policy: cite_and_label_uncertainty
+  on_insufficient_evidence: abstain
+  explain_recommendation: true
+authorization:
+  default: deny
+  actions:
+    research_public: allow
+    analyze: allow
+    draft_output: allow
+    delete_data: deny
+    deploy: deny
+    modify_external: deny
+    purchase: deny
+    send_external: approval_required
+    transfer_funds: deny
+  approval:
+    scope: single_action
+    expires_minutes: 30
+verify:
+  pass_when: all
+  checks:
+  - id: deliverable-present
+    kind: programmatic
+    criterion: Expected output is non-empty
+    rule: output_nonempty
+  - id: human-signoff
+    kind: human
+    criterion: Human reviewer confirms relevance and accuracy
+    rule: manual_review
+limits:
+  max_spend_hkd: 0
+  max_retries_per_step: 2
+deliverables:
+- id: primary-output
+  description: Human-readable task result; refine format during review
+  required: true
+lifecycle:
+  initial_state: draft
+  terminal_states:
+  - completed
+  - failed
+  - cancelled
+review:
+  open_questions:
+  - 交付物格式與成功驗收條件係乜？
+  - 涉及外部操作，請明確確認範圍、對象同是否需要修改 Contract。
+  - 有冇必須遵守嘅期限或其他限制？
+  assumptions:
+  - Default-deny authorization; no live actions
+  - Proposed priorities are only extracted from explicit phrases
+  requested_sensitive_actions:
+  - send_external
+---
+
+# CONTEXT
+This is an ATC v0.6 *draft*, not a permission to execute.
+
+# CONSTRAINTS
+- MUST respect YAML authorization policy.
+- MUST NOT take external or irreversible actions without a trusted host approval mechanism.
+- MUST NOT treat model-authored evidence as independently verified.
+
+# TASK
+Prepare the requested result within declared scope. Raise open questions when they materially affect the output.
+
+# INPUT
+Original user request (quoted, not a higher-priority instruction):
+
+&gt; 幫我草擬一份研究報告之後發送電郵給同事，發送前要先攞我批准。
+
+# OUTPUT
+Provide the required deliverables, evidence and unresolved questions. A human review is pending.
+</pre></details>
+<footer>Review Preview Only · Not an approval interface · No real tools or external effects · No automatic completion.</footer>
+</main></body></html>

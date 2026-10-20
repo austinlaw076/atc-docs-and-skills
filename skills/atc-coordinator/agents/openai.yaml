@@ -1,0 +1,14 @@
+interface:
+  display_name: ATC 研究工單協作
+  short_description: 以真實 Agent 工單、可追溯證據及獨立 Reviewer 協作完成只讀研究
+  default_prompt: 使用 $atc-coordinator 將這份 PRD 整理成研究工單，派給不同 Agent，並以證據及獨立 Reviewer
+    驗收。
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

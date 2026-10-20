@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "atc_version",
+    "id",
+    "version",
+    "parent",
+    "orchestration",
+    "work_order_files"
+  ],
+  "properties": {
+    "kind": {
+      "const": "work_plan"
+    },
+    "atc_version": {
+      "const": "0.9"
+    },
+    "id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "parent": {
+      "$ref": "#/$defs/parent"
+    },
+    "orchestration": {
+      "type": "object",
+      "required": [
+        "max_parallel_agents",
+        "max_attempts"
+      ],
+      "properties": {
+        "max_parallel_agents": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        }
+      },
+      "additionalProperties": false
+    },
+    "work_order_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "parent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "version": "1.1.0",
+  "contract_version": "1.1",
+  "stage": "restricted_local_runtime_pilot",
+  "production_ready": false,
+  "code_commit": "c76014f5c2dbb74719e1e44509886aea6a46f737",
+  "profile": "seccomp_python_stdio_v1",
+  "local_kernel_enforcement": "verified",
+  "general_vm_container_isolation": false,
+  "live_model_inside_profile": "not_integrated_not_verified",
+  "full_suite": {"passed": 282, "subtests_passed": 41},
+  "runtime_unit_tests": 104,
+  "new_isolation_tests": 26,
+  "negative_probes_denied": 23,
+  "fixture_workflow": "accepted_host_reviewed",
+  "isolation_evidence": "trusted_host_verified_readiness_and_ack",
+  "next_gate": "Integrate real model workers and independent semantic review without widening the restricted process authority"
+}

@@ -1,0 +1,131 @@
+{
+  "checks": {
+    "file_read": {
+      "denied": true,
+      "errno": 1
+    },
+    "file_write": {
+      "denied": true,
+      "errno": 1
+    },
+    "file_append": {
+      "denied": true,
+      "errno": 1
+    },
+    "symlink_read": {
+      "denied": true,
+      "errno": 1
+    },
+    "traversal_read": {
+      "denied": true,
+      "errno": 1
+    },
+    "unlink": {
+      "denied": true,
+      "errno": 1
+    },
+    "mkdir": {
+      "denied": true,
+      "errno": 1
+    },
+    "symlink_create": {
+      "denied": true,
+      "errno": 1
+    },
+    "tcp_socket": {
+      "denied": true,
+      "errno": 1
+    },
+    "udp_socket": {
+      "denied": true,
+      "errno": 1
+    },
+    "unix_socket": {
+      "denied": true,
+      "errno": 1
+    },
+    "fork": {
+      "denied": true,
+      "errno": 1
+    },
+    "external_tool": {
+      "denied": true,
+      "errno": 1
+    },
+    "thread": {
+      "denied": true,
+      "error": "can't start new thread"
+    },
+    "native_open": {
+      "denied": true,
+      "return": -1,
+      "errno": 1
+    },
+    "native_openat": {
+      "denied": true,
+      "return": -1,
+      "errno": 1
+    },
+    "native_openat2": {
+      "denied": true,
+      "return": -1,
+      "errno": 1
+    },
+    "ptrace": {
+      "denied": true,
+      "return": -1,
+      "errno": 1
+    },
+    "parent_memory": {
+      "denied": true,
+      "return": -1,
+      "errno": 1
+    },
+    "parent_signal_probe": {
+      "denied": true,
+      "return": -1,
+      "errno": 1
+    },
+    "filter_change": {
+      "denied": true,
+      "return": -1,
+      "errno": 1
+    },
+    "privilege_change": {
+      "denied": true,
+      "return": -1,
+      "errno": 1
+    },
+    "native_execve": {
+      "denied": true,
+      "return": -1,
+      "errno": 1
+    }
+  },
+  "provenance": "real child-process canary probes; no model involved",
+  "controls": {
+    "host_can_read_canary": true,
+    "host_can_create_tcp_socket": true
+  },
+  "readiness": {
+    "profile": "seccomp_python_stdio_v1",
+    "pid": 6,
+    "prompt_sha256": "04af2e4a04bbea42aaadc789fe816cbc29dd9ab644ea4da5d501cd69fb40ca5e",
+    "worker_sha256": "4d19402621b03fee2e2719fcd55a17280080926906c8371e62e76592deb76d91",
+    "bootstrap_sha256": "bf24c187a1582ecc3c174e3cf572c93ea85e16a539ff9502aa5e5d221c39436d",
+    "policy_sha256": "ac5f96417c00111e31ebac490f149d7ddf727d173528e2a53c96e23e836a8a5f",
+    "limits": {
+      "memory_bytes": 268435456,
+      "cpu_seconds": 5,
+      "wall_seconds": 10,
+      "stdout_bytes": 500000,
+      "stderr_bytes": 16384
+    }
+  },
+  "host_agent_id": "seccomp:6:cf97ed4338374fd491bf8c8d9e9eac44",
+  "kernel": "6.18.55",
+  "python": "3.12.14",
+  "canary_unchanged": true,
+  "mutations_absent": true,
+  "status": "pass"
+}

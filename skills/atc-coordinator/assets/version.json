@@ -1,0 +1,30 @@
+{
+  "skill_version": "1.1.0",
+  "atc_version": "1.1.0",
+  "contract_version": "1.1",
+  "stage": "research_pilot",
+  "source_commit": "c76014f5c2dbb74719e1e44509886aea6a46f737",
+  "runtime_sha256": {
+    "runtime.py": "5b84b2fb052daf95033e1ead1d989ed1aff51280daab94d1cffed89ac886f8e4",
+    "isolation.py": "0699c0ee4d8df4f8960853ad42bdb1f7bf65cac916ca1e74b6ab78a9a625a0e4",
+    "_restricted_worker.py": "bf24c187a1582ecc3c174e3cf572c93ea85e16a539ff9502aa5e5d221c39436d",
+    "__main__.py": "b78a6d9d2a1d0d5f87f84e34365ae05e49d89e2f257154e7a3b71fc40bafd8be",
+    "__init__.py": "6a520c33a97f4869dbf604feada4e9953392f8f99b0e3b8ac304dfd2999b97c5",
+    "core.py": "5b7fb66d10056bb152f9fa4dd580d2c389209351500a2de4a89d3cc2e8a7f5a5"
+  },
+  "restricted_local_profile": "seccomp_python_stdio_v1",
+  "bundled_live_run_history": false,
+  "validation": {
+    "runtime_unit_tests": 104,
+    "full_suite_tests": 282,
+    "full_suite_subtests": 41,
+    "local_profile": "verified",
+    "negative_probes": 23,
+    "live_model_inside_profile": false,
+    "general_sandbox": "not_provided",
+    "skill_forward_test": "passed_fresh_session_104_tests",
+    "evidence": "Program release outputs/atc11-isolation; synthetic workflow, local enforcement only"
+  },
+  "local_kernel_enforcement": true,
+  "general_vm_container_isolation": false
+}

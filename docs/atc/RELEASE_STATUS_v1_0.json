@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "stage": "research_pilot",
+  "research_workflow": "accepted_host_reviewed",
+  "live_cli_host_bridge": "verified",
+  "automatic_callback_loop": "fixture_tested_only",
+  "enforced_low_authority_runtime": "not_verified",
+  "production_ready": false,
+  "next_gate": "Technically enforced tool/filesystem/network restrictions and negative permission tests"
+}

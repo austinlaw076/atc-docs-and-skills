@@ -1,0 +1,3 @@
+# Host Integration Roadmap (next milestone)
+
+ATC v0.5 implements an isolated **mock** Policy Gateway only. Before attaching real tools: deploy gateway in a separate host principal, store pinned contract and SQLite away from agents, restrict privileged tools to gateway dispatch, protect private signing keys under an authenticated user approval UI, replace mock adapters with idempotent outbox-based connectors, bind signed approvals to actual user identity and exact concrete requests, sign and externally anchor audit logs, implement action timeouts/retries/cancellations, and conduct independent security review. This document is a roadmap, not an installed control.

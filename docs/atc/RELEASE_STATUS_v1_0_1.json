@@ -1,0 +1,21 @@
+{
+  "version": "1.0.1",
+  "stage": "research_pilot",
+  "production_ready": false,
+  "code_commit": "1126d42974819a256439bd37b612b4a0e30ba026",
+  "full_suite": {
+    "passed": 256,
+    "subtests_passed": 27
+  },
+  "dedicated_unit_tests": 78,
+  "live_cli_host_bridge": "verified",
+  "automatic_callback_loop": "fixture_tested_only",
+  "enforced_low_authority_runtime": "not_verified",
+  "prompt_delivery_proof": "trusted_host_attestation",
+  "next_gate": "Technically enforced tool/filesystem/network restrictions and negative permission tests",
+  "research_workflow": "accepted_host_reviewed",
+  "accepted_tasks": 3,
+  "accepted_criteria": 6,
+  "real_sessions": 7,
+  "expired_review_recovered": true
+}

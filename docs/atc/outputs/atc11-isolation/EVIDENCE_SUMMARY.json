@@ -1,0 +1,8 @@
+{
+  "enforcement": "verified_local_seccomp_profile",
+  "negative_checks": 23,
+  "all_denied": true,
+  "fixture_workflow": "accepted_host_reviewed",
+  "live_model_agents": false,
+  "scope": "local restricted Python processes; deterministic research/reviewer fixtures, not live models"
+}

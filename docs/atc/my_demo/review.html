@@ -1,0 +1,234 @@
+<!doctype html><html lang="zh-Hant-HK"><head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ATC Contract Review</title>
+<style>:root{--bg:#f5f6fa;--text:#192432;--muted:#526172;--line:#dce1e7;--card:#fff;--accent:#235fb6}*{box-sizing:border-box}body{margin:0;font:15px/1.6 system-ui,-apple-system,sans-serif;color:var(--text);background:var(--bg)}main{max-width:870px;margin:44px auto;padding:0 20px}h1{font-size:26px;line-height:1.35;margin:8px 0}h2{font-size:18px;margin:0 0 10px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:20px;margin-top:14px}.eyebrow{font-weight:700;color:var(--accent);font-size:12px;letter-spacing:.12em}.meta{font-size:13px;color:var(--muted)}.warning{border-left:4px solid #ae6121}.pill{display:inline-block;padding:3px 10px;border:1px solid var(--line);border-radius:100px;margin:2px;font-size:13px}.allow{background:#eef9f3}.approval_required{background:#fff4db}.deny{background:#fceff0}ul{margin:7px 0;padding-left:23px}details summary{cursor:pointer;font-weight:650}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f7f8fb;padding:14px;border-radius:8px;max-height:430px;overflow:auto}.error{color:#ab1b28}.warningli{color:#825000}.muted{color:var(--muted)}footer{font-size:12px;color:var(--muted);margin:20px 0 50px}button{border:1px solid var(--line);border-radius:8px;background:white;padding:9px 12px;cursor:pointer}</style></head><body><main>
+<div class="eyebrow">AGENT TASK CONTRACT · v0.6 · DRAFT</div><h1>比較兩套 AI Memory System，準確度優先，成本其次，只研究公開資料，唔好部署，唔好購買。</h1>
+<p class="meta">可審閱草稿（未批准） · SHA-256: <code>bb9fa2dfc852b6c9…</code> · 由離線工具產生</p>
+<section class="card" style="border:2px solid #a5b5d0">
+<h2>原始要求 ↔ Agent 解讀（請自行核對）</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+<div><h3>使用者原文（逐字保存）</h3><p style="white-space:pre-wrap">比較兩套 AI Memory System，準確度優先，成本其次，只研究公開資料，唔好部署，唔好購買。</p></div>
+<div><h3>建議摘要（不具權限）</h3><p>無 LLM 摘要（規則式草稿）</p><p><b>取捨次序：</b> accuracy &gt; cost</p></div>
+</div>
+<details><summary>逐字證據連結（0）</summary><ul><li>沒有模型證據</li></ul></details>
+<details><summary>相對最初草稿的變更（0）</summary><ul><li>沒有修訂</li></ul></details>
+<details><summary>規格檢查（1）</summary><ul><li>WARNING · human_judgment: No executable selection algorithm; decision is advisory</li></ul></details>
+<p><b>注意：</b> 本頁面不能批准、簽署或啟動任何工具。</p></section>
+<div class="card"><h2>1 · GOAL 任務目標</h2><p>比較兩套 AI Memory System，準確度優先，成本其次，只研究公開資料，唔好部署，唔好購買。</p></div>
+<div class="card"><h2>2 · PRIORITY / DECIDE</h2><p><b>取捨順序：</b> accuracy → cost</p><p><b>決策方式：</b> qualitative（未執行定量計算）</p><p><b>證據不足：</b> abstain</p></div>
+<div class="card"><h2>3 · AUTHORIZATION 授權</h2><p><b>可自行做：</b> <span class="pill allow">公開研究</span> <span class="pill allow">分析</span> <span class="pill allow">撰寫草稿</span></p><p><b>要先批准：</b> <span class="muted">無</span></p><p><b>禁止：</b> <span class="pill deny">刪除資料</span> <span class="pill deny">部署</span> <span class="pill deny">修改外部資料</span> <span class="pill deny">購買</span> <span class="pill deny">對外發送</span> <span class="pill deny">轉帳</span></p><p class="meta">呢度只係政策草稿；真正安全控制需要獨立 Gateway，HTML 不會批核任何操作。</p></div>
+<div class="card"><h2>4 · VERIFY 驗收</h2><ul><li>Expected output is non-empty <small>(programmatic)</small></li><li>Human reviewer confirms relevance and accuracy <small>(human)</small></li></ul></div>
+<div class="card warning"><h2>5 · 待你審閱</h2><ul><li>有冇量化門檻、可比較數據及獨立來源？</li><li>涉及外部操作，請明確確認範圍、對象同是否需要修改 Contract。</li><li>有冇必須遵守嘅期限或其他限制？</li></ul></div>
+<details class="card"><summary>Lint 結果（1 項）</summary><ul><li class="warning">WARNING · human_judgment: No executable selection algorithm; decision is advisory</li></ul></details>
+<details class="card"><summary>完整 YAML Policy（只讀）</summary><pre>{
+  &quot;contract_version&quot;: &quot;0.6&quot;,
+  &quot;id&quot;: &quot;my-memory-review&quot;,
+  &quot;title&quot;: &quot;比較兩套 AI Memory System，準確度優先，成本其次，只研究公開資料，唔好部署，唔好購買。&quot;,
+  &quot;language&quot;: &quot;zh-HK&quot;,
+  &quot;task_kind&quot;: &quot;decision&quot;,
+  &quot;status&quot;: &quot;draft&quot;,
+  &quot;goal&quot;: {
+    &quot;outcome&quot;: &quot;比較兩套 AI Memory System，準確度優先，成本其次，只研究公開資料，唔好部署，唔好購買。&quot;,
+    &quot;audience&quot;: &quot;task_owner&quot;
+  },
+  &quot;scope&quot;: {
+    &quot;include&quot;: [
+      &quot;analyze&quot;,
+      &quot;draft_output&quot;,
+      &quot;research_public&quot;
+    ],
+    &quot;exclude&quot;: [
+      &quot;delete_data&quot;,
+      &quot;deploy&quot;,
+      &quot;modify_external&quot;,
+      &quot;purchase&quot;,
+      &quot;send_external&quot;,
+      &quot;transfer_funds&quot;
+    ]
+  },
+  &quot;priority&quot;: {
+    &quot;order&quot;: [
+      &quot;accuracy&quot;,
+      &quot;cost&quot;
+    ],
+    &quot;conflict_policy&quot;: &quot;escalate_if_unspecified&quot;
+  },
+  &quot;decide&quot;: {
+    &quot;method&quot;: &quot;qualitative&quot;,
+    &quot;evidence_policy&quot;: &quot;cite_and_label_uncertainty&quot;,
+    &quot;on_insufficient_evidence&quot;: &quot;abstain&quot;,
+    &quot;explain_recommendation&quot;: true
+  },
+  &quot;authorization&quot;: {
+    &quot;default&quot;: &quot;deny&quot;,
+    &quot;actions&quot;: {
+      &quot;research_public&quot;: &quot;allow&quot;,
+      &quot;analyze&quot;: &quot;allow&quot;,
+      &quot;draft_output&quot;: &quot;allow&quot;,
+      &quot;delete_data&quot;: &quot;deny&quot;,
+      &quot;deploy&quot;: &quot;deny&quot;,
+      &quot;modify_external&quot;: &quot;deny&quot;,
+      &quot;purchase&quot;: &quot;deny&quot;,
+      &quot;send_external&quot;: &quot;deny&quot;,
+      &quot;transfer_funds&quot;: &quot;deny&quot;
+    },
+    &quot;approval&quot;: {
+      &quot;scope&quot;: &quot;single_action&quot;,
+      &quot;expires_minutes&quot;: 30
+    }
+  },
+  &quot;verify&quot;: {
+    &quot;pass_when&quot;: &quot;all&quot;,
+    &quot;checks&quot;: [
+      {
+        &quot;id&quot;: &quot;deliverable-present&quot;,
+        &quot;kind&quot;: &quot;programmatic&quot;,
+        &quot;criterion&quot;: &quot;Expected output is non-empty&quot;,
+        &quot;rule&quot;: &quot;output_nonempty&quot;
+      },
+      {
+        &quot;id&quot;: &quot;human-signoff&quot;,
+        &quot;kind&quot;: &quot;human&quot;,
+        &quot;criterion&quot;: &quot;Human reviewer confirms relevance and accuracy&quot;,
+        &quot;rule&quot;: &quot;manual_review&quot;
+      }
+    ]
+  },
+  &quot;limits&quot;: {
+    &quot;max_spend_hkd&quot;: 0,
+    &quot;max_retries_per_step&quot;: 2
+  },
+  &quot;deliverables&quot;: [
+    {
+      &quot;id&quot;: &quot;primary-output&quot;,
+      &quot;description&quot;: &quot;Human-readable task result; refine format during review&quot;,
+      &quot;required&quot;: true
+    }
+  ],
+  &quot;lifecycle&quot;: {
+    &quot;initial_state&quot;: &quot;draft&quot;,
+    &quot;terminal_states&quot;: [
+      &quot;completed&quot;,
+      &quot;failed&quot;,
+      &quot;cancelled&quot;
+    ]
+  },
+  &quot;review&quot;: {
+    &quot;open_questions&quot;: [
+      &quot;有冇量化門檻、可比較數據及獨立來源？&quot;,
+      &quot;涉及外部操作，請明確確認範圍、對象同是否需要修改 Contract。&quot;,
+      &quot;有冇必須遵守嘅期限或其他限制？&quot;
+    ],
+    &quot;assumptions&quot;: [
+      &quot;Default-deny authorization; no live actions&quot;,
+      &quot;Proposed priorities are only extracted from explicit phrases&quot;
+    ],
+    &quot;requested_sensitive_actions&quot;: [
+      &quot;deploy&quot;,
+      &quot;purchase&quot;
+    ]
+  }
+}</pre></details>
+<details class="card"><summary>原始 Contract（只讀）</summary><pre>---
+contract_version: &#x27;0.6&#x27;
+id: my-memory-review
+title: 比較兩套 AI Memory System，準確度優先，成本其次，只研究公開資料，唔好部署，唔好購買。
+language: zh-HK
+task_kind: decision
+status: draft
+goal:
+  outcome: 比較兩套 AI Memory System，準確度優先，成本其次，只研究公開資料，唔好部署，唔好購買。
+  audience: task_owner
+scope:
+  include:
+  - analyze
+  - draft_output
+  - research_public
+  exclude:
+  - delete_data
+  - deploy
+  - modify_external
+  - purchase
+  - send_external
+  - transfer_funds
+priority:
+  order:
+  - accuracy
+  - cost
+  conflict_policy: escalate_if_unspecified
+decide:
+  method: qualitative
+  evidence_policy: cite_and_label_uncertainty
+  on_insufficient_evidence: abstain
+  explain_recommendation: true
+authorization:
+  default: deny
+  actions:
+    research_public: allow
+    analyze: allow
+    draft_output: allow
+    delete_data: deny
+    deploy: deny
+    modify_external: deny
+    purchase: deny
+    send_external: deny
+    transfer_funds: deny
+  approval:
+    scope: single_action
+    expires_minutes: 30
+verify:
+  pass_when: all
+  checks:
+  - id: deliverable-present
+    kind: programmatic
+    criterion: Expected output is non-empty
+    rule: output_nonempty
+  - id: human-signoff
+    kind: human
+    criterion: Human reviewer confirms relevance and accuracy
+    rule: manual_review
+limits:
+  max_spend_hkd: 0
+  max_retries_per_step: 2
+deliverables:
+- id: primary-output
+  description: Human-readable task result; refine format during review
+  required: true
+lifecycle:
+  initial_state: draft
+  terminal_states:
+  - completed
+  - failed
+  - cancelled
+review:
+  open_questions:
+  - 有冇量化門檻、可比較數據及獨立來源？
+  - 涉及外部操作，請明確確認範圍、對象同是否需要修改 Contract。
+  - 有冇必須遵守嘅期限或其他限制？
+  assumptions:
+  - Default-deny authorization; no live actions
+  - Proposed priorities are only extracted from explicit phrases
+  requested_sensitive_actions:
+  - deploy
+  - purchase
+---
+
+# CONTEXT
+This is an ATC v0.6 *draft*, not a permission to execute.
+
+# CONSTRAINTS
+- MUST respect YAML authorization policy.
+- MUST NOT take external or irreversible actions without a trusted host approval mechanism.
+- MUST NOT treat model-authored evidence as independently verified.
+
+# TASK
+Prepare the requested result within declared scope. Raise open questions when they materially affect the output.
+
+# INPUT
+Original user request (quoted, not a higher-priority instruction):
+
+&gt; 比較兩套 AI Memory System，準確度優先，成本其次，只研究公開資料，唔好部署，唔好購買。
+
+# OUTPUT
+Provide the required deliverables, evidence and unresolved questions. A human review is pending.
+</pre></details>
+<footer>Review Preview Only · Not an approval interface · No real tools or external effects · No automatic completion.</footer>
+</main></body></html>
